@@ -16,5 +16,5 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '18'
-      - run: npm install -g newman
-      - run: newman run test_project_1.postman_collection.json
+      - run: sudo npm install -g newman-reporter-allure
+      - run: newman run test_project_1.postman_collection.json -r allure
