@@ -1,33 +1,16 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
+name: Newman Test Run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+    branches:
+    - master
+    - staging
 jobs:
   newman:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: sudo npm install -g newman-reporter-allure
-        
-      - name: Run a one-line script
-        run: npm list -g --depth 0 newman-reporter-allure
-    
-      - uses: actions/checkout@master
-      - uses: matt-ball/newman-action@master
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
         with:
-          collection: test_project_1.postman_collection.json
-          reporters: '["allure"]'
+          node-version: '12'
+      - run: npm install -g newman
+      - run: newman run test_project_1.postman_collection.json
