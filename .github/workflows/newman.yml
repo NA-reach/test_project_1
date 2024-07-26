@@ -21,6 +21,7 @@ jobs:
       
   generate-report:
     runs-on: ubuntu-latest
+    needs: newman-run
     name: Generate report
     steps:
       - uses: actions/setup-java@v3
@@ -41,6 +42,7 @@ jobs:
 
   publish-report:
     runs-on: ubuntu-latest
+    needs: generate-report
     name: Report publication
     steps:
       - name: Download all workflow run artifacts
