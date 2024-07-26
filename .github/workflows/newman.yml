@@ -9,7 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
-  newman:
+  newman-run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,3 +18,35 @@ jobs:
           node-version: '18'
       - run: sudo npm install -g newman-reporter-allure
       - run: newman run test_project_1.postman_collection.json -r cli,allure --reporter-allure-export allure-results
+      
+  generate-report:
+    runs-on: ubuntu-latest
+    name: Generate report
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'microsoft' # See 'Supported distributions' for available options
+          java-version: '17'
+      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
+      - run: allure generate -c allure-results -o _site
+      - name: Store generated report
+        uses: actions/upload-artifact@v3
+        with:
+          name: _site
+          path:
+            _site
+          retention-days: 1
+
+  publish-report:
+    runs-on: ubuntu-latest
+    name: Report publication
+    steps:
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1.2.9
