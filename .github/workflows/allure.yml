@@ -38,11 +38,14 @@ jobs:
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 1
       - name: install allure-reporter
-        # run: echo $ALLURE_PROJECT_ID
       - run: sudo npm install -g newman-reporter-allure
       - name: run all tests
+        uses: actions/checkout@master
+      - uses: matt-ball/newman-action@master
       # run: echo $ALLURE_PROJECT_ID
-      - run: newman run test_project_1.postman_collection.json -r cli,allure --reporter-allure-export allure-results
+        with:
+          collection: test_project_1.postman_collection.json
+          reporters: '["allure"]'
         continue-on-error: true
       - name: Store allure results
         uses: actions/upload-artifact@v3
