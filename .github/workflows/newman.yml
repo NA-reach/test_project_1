@@ -17,6 +17,19 @@ jobs:
   newman:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: sudo npm install -g newman-reporter-allure
+        
+      - name: Run a one-line script
+        run: npm list --depth 0 newman-reporter-allure
+
+        
+      - name: Run a one-line script
+        run: npm list -g --depth 0 newman-reporter-allure
+    
       - uses: actions/checkout@master
       - uses: matt-ball/newman-action@master
         with:
