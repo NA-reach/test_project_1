@@ -37,9 +37,11 @@ jobs:
           allure-endpoint: https://nabdirov.testops.cloud/
           allure-token: ${{ secrets.ALLURE_TOKEN }}
           allure-project-id: 1
-      - name: run all tests
+      - name: install allure-reporter
         # run: echo $ALLURE_PROJECT_ID
       - run: sudo npm install -g newman-reporter-allure
+      - name: run all tests
+      # run: echo $ALLURE_PROJECT_ID
       - run: newman run test_project_1.postman_collection.json -r cli,allure --reporter-allure-export allure-results
         continue-on-error: true
       - name: Store allure results
