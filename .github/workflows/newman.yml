@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: '18'
       - run: sudo npm install -g newman-reporter-allure
-      - run: newman run test_project_1.postman_collection.json -r cli,json,allure
+      - run: newman run test_project_1.postman_collection.json -r cli,allure --reporter-allure-export allure-results
