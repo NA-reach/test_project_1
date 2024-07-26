@@ -39,7 +39,7 @@ jobs:
           allure-project-id: 1
       - name: run all tests
         # run: echo $ALLURE_PROJECT_ID
-      - run: sudo npm install -g newman-reporter-allure
+        run: sudo npm install -g newman-reporter-allure
       - run: allurectl watch -- newman run test_project_1.postman_collection.json -r cli,allure --reporter-allure-export allure-results
         # continue-on-error: true
       - name: Store allure results
