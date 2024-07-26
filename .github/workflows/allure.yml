@@ -40,7 +40,6 @@ jobs:
       - name: install allure-reporter
       - run: sudo npm install -g newman-reporter-allure
       - name: run all tests
-        uses: actions/checkout@master
       - uses: matt-ball/newman-action@master
       # run: echo $ALLURE_PROJECT_ID
         with:
