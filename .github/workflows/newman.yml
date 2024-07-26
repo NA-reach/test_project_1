@@ -27,4 +27,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
+        run: sudo npm install -g newman-reporter-allure
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
         run: newman run test_project_1.postman_collection.json -r allure
