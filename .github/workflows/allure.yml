@@ -31,6 +31,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: install allure-reporter
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '18'
+      - run: sudo npm install -g newman-reporter-allure
       - name: Install allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
